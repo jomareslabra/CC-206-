@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="assets/logo.jpg" alt="Our Logo" width="130"><br>
+
 # HealthSync
 
 HealthSync is a patient booking management system that allows staff to book patients with available doctors efficiently. It streamlines scheduling and improves workflow for healthcare teams especially in a busy and time sensitive field of healthcare.
