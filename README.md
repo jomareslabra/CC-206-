@@ -13,3 +13,12 @@ HealthSync is a patient booking management system that allows staff to book pati
 - Secure access for hospital staff
 
 
+## Overview
+Key Tables:
+  - Receptionist: Login credentials and profile
+  - Doctors: Availability and Specialization
+  - Patients: Basic info and appointment history
+  - Appointments: Date,time,doctor,patient,and status
+  - Notifications: Message logs and delivery status
+
+
