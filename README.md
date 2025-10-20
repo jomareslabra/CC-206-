@@ -18,7 +18,7 @@ Key Tables:
   - Receptionist: Login credentials and profile
   - Doctors: Availability and Specialization
   - Patients: Basic info and appointment history
-  - Appointments: Date,time,doctor,patient,and status
+  - Appointments: Date, time, doctor, patient, and status
   - Notifications: Message logs and delivery status
   - Records: Provide both patient and doctors records
 
