@@ -20,5 +20,5 @@ Key Tables:
   - Patients: Basic info and appointment history
   - Appointments: Date,time,doctor,patient,and status
   - Notifications: Message logs and delivery status
-
+  - Records: Provide both patient and doctors records
 
