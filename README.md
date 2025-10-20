@@ -11,7 +11,7 @@ HealthSync is a patient booking management system that allows staff to book pati
 - View doctor schedules
 - Manage patient records
 - Secure access for hospital staff
-
+- Email or SMS appointment reminders
 
 ## Overview
 Key Tables:
