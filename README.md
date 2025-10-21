@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.jpg" alt="Our Logo" width="200"><br>
+  <img src="public/assets/logo.jpg" alt="Our Logo" width="200"><br>
 
 # HealthSync
 
