@@ -5,6 +5,11 @@ on:
     branches:
       - main  # Runs on every push to main
 
+permissions:
+  contents: write
+  pages: write  # If using GitHub Pages environment
+  id-token: write  # If using GitHub Pages environment
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
