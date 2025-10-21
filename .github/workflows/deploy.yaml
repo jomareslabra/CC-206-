@@ -30,5 +30,6 @@ jobs:
           folder: dist
           token: ${{ secrets.GITHUB_TOKEN }}
           clean: true
+          force: true
           git-config-name: "github-actions[bot]"
           git-config-email: "github-actions[bot]@users.noreply.github.com"
