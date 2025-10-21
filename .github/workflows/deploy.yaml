@@ -23,11 +23,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Set Git user
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
@@ -35,4 +30,5 @@ jobs:
           folder: dist
           token: ${{ secrets.GITHUB_TOKEN }}
           clean: true
-          allow-empty-commit: true
+          git-config-name: "github-actions[bot]"
+          git-config-email: "github-actions[bot]@users.noreply.github.com"
