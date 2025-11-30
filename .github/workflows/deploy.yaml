@@ -24,12 +24,46 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+
+      - name: Debug - Show project structure
+        run: |
+          echo "=== Project Root ==="
+          ls -la
+          echo "=== src directory ==="
+          ls -la src/
+          echo "=== src/components ==="
+          find src/components -type f -name "*.jsx" -o -name "*.js" | head -20
+          echo "=== Checking for main.jsx ==="
+          find . -name "main.jsx" -o -name "main.js"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Debug - Check Vite installation
+        run: |
+          echo "=== Vite version ==="
+          npx vite --version
+          echo "=== Checking build script ==="
+          npm run
 
       - name: Build React App
-        run: npm run build
+        run: |
+          CI=false npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Verify build output
+        run: |
+          echo "=== Build output structure ==="
+          ls -la dist/
+          echo "=== Checking index.html ==="
+          if [ -f "dist/index.html" ]; then
+            echo "index.html exists and has $(wc -l < dist/index.html) lines"
+          else
+            echo "ERROR: index.html not found in dist/"
+            ls -la dist/
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -37,7 +71,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload the 'dist' folder created by your build
           path: './dist'
 
   deploy:
