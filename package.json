@@ -7,11 +7,14 @@
     "dev": "vite",
     "build": "vite build && touch dist/.nojekyll",
     "preview": "vite preview",
-    "predeploy":  "npm run build && cp public/404.html dist/404.html",
+    "predeploy": "npm run build && cp public/404.html dist/404.html",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "lucide-react": "^0.561.0",
+    "moment": "^2.30.1",
     "react": "^18.3.1",
+    "react-big-calendar": "^1.19.4",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.2"
   },
