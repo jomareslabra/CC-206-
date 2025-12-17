@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import '../../styles/auth/Auth.css'; // Fixed path
+import '../../styles/auth/Auth.css'; 
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -17,21 +17,32 @@ const Login = () => {
     setLoading(true);
     setError('');
 
-    const result = login(email, password);
-    
-    if (result.success) {
+    try {
+      // 1. Wait for Firebase to log in
+      await login(email, password);
+      
+      // 2. Redirect on success
       navigate('/admin/dashboard');
-    } else {
-      setError(result.error);
+    } catch (err) {
+      // 3. Handle Errors
+      console.error(err);
+      if (err.code === 'auth/invalid-credential') {
+        setError('Incorrect email or password.');
+      } else if (err.code === 'auth/too-many-requests') {
+        setError('Too many failed attempts. Try again later.');
+      } else {
+        setError('Failed to sign in: ' + err.message);
+      }
+    } finally {
+      setLoading(false);
     }
-    
-    setLoading(false);
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
+          {/* Restored your original FontAwesome icon */}
           <i className="fas fa-hospital-alt auth-logo"></i>
           <h2>Staff Login</h2>
           <p>Access the HealthSync Admin Dashboard</p>
@@ -64,7 +75,7 @@ const Login = () => {
 
           <button 
             type="submit" 
-            className="auth-btn"
+            className="auth-btn" // Restored your original class
             disabled={loading}
           >
             {loading ? 'Signing In...' : 'Sign In'}
@@ -75,11 +86,9 @@ const Login = () => {
           <p>
             Demo Credentials: <br />
             Email: admin@healthsync.com<br />
-            Password: password
+            Password: password123
           </p>
-          <p>
-            Don't have an account? <Link to="/signup">Sign up</Link>
-          </p>
+          
         </div>
       </div>
     </div>

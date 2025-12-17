@@ -1,58 +1,61 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  signOut, 
+  onAuthStateChanged 
+} from 'firebase/auth';
+import { auth } from '../config/firebase';
 
 const AuthContext = createContext();
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
+  return useContext(AuthContext);
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = (email, password) => {
-    // Mock authentication
-    if (email === 'admin@healthsync.com' && password === 'password') {
-      const userData = {
-        id: 1,
-        name: 'Admin User',
-        email: email,
-        role: 'admin'
-      };
-      setUser(userData);
-      setIsAuthenticated(true);
-      localStorage.setItem('user', JSON.stringify(userData));
-      return { success: true };
-    }
-    return { success: false, error: 'Invalid credentials' };
-  };
+  // 1. Sign Up Function (Create new user)
+  function signup(email, password) {
+    return createUserWithEmailAndPassword(auth, email, password);
+  }
 
-  const logout = () => {
-    setUser(null);
-    setIsAuthenticated(false);
-    localStorage.removeItem('user');
-  };
+  // 2. Login Function (Sign in existing user)
+  function login(email, password) {
+    return signInWithEmailAndPassword(auth, email, password);
+  }
 
-  React.useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-      setIsAuthenticated(true);
-    }
+  // 3. Logout Function
+  function logout() {
+    return signOut(auth);
+  }
+
+  // 4. Auth State Listener (Runs once on mount)
+  // This checks if Firebase remembers the user from a previous session
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setLoading(false); // Stop loading once we know the status
+    });
+
+    return unsubscribe; // Cleanup subscription on unmount
   }, []);
 
+  const value = {
+    currentUser,
+    // We keep 'isAuthenticated' so your existing ProtectedRoutes still work!
+    isAuthenticated: !!currentUser, 
+    signup,
+    login,
+    logout
+  };
+
   return (
-    <AuthContext.Provider value={{
-      user,
-      isAuthenticated,
-      login,
-      logout
-    }}>
-      {children}
+    <AuthContext.Provider value={value}>
+      {/* We only render the app after we check if the user is logged in */}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };

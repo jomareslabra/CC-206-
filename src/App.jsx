@@ -11,8 +11,9 @@ import DoctorsPage from './pages/DoctorsPage';
 import './styles/App.css';
 import PatientForm from './components/patients/PatientForm';
 import DoctorForm from './components/doctors/DoctorForm';
-// 1. ADD THIS IMPORT
 import AppointmentForm from './components/appointments/AppointmentForm';
+// 1. IMPORT SEED DATA
+import SeedData from './components/admin/SeedData';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -28,6 +29,9 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           
+          {/* 2. ADD SEED ROUTE (Temporary tool) */}
+          <Route path="/seed" element={<SeedData />} />
+          
           {/* Protected admin routes */}
           <Route path="/admin" element={
             <ProtectedRoute>
@@ -36,7 +40,6 @@ function App() {
           }>
             <Route path="dashboard" element={<DashboardPage />} />
             
-            {/* 2. UPDATE APPOINTMENTS ROUTES HERE */}
             <Route path="appointments" element={<AppointmentsPage />} />
             <Route path="appointments/new" element={<AppointmentForm mode="add" />} />
             <Route path="appointments/:id/edit" element={<AppointmentForm mode="edit" />} />
