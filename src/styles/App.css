@@ -261,6 +261,29 @@ body {
   color: #c62828;
 }
 
+/* ===== DOCTORS PAGE STYLES ===== */
+
+/* Reuse patients-page styles for doctors */
+.doctors-page {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  margin-top: 20px;
+}
+
+/* Doctor-specific status colors */
+.status-badge.on-leave {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+/* Make sure doctors container uses same styles */
+.doctors-container {
+  width: 100%;
+}
+
+/* Table styles are already shared via .patients-table class */
 .action-buttons {
   display: flex;
   gap: 8px;

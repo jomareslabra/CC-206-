@@ -38,7 +38,7 @@ const PatientTable = () => {
   return (
     <>
       <div className="patients-container">
-        {/* TABLE HEADER WITH "NEW PATIENT" BUTTON */}
+        {/* Table Header */}
         <div className="table-header">
           <h2>Patients</h2>
           <button 
@@ -49,7 +49,7 @@ const PatientTable = () => {
           </button>
         </div>
 
-        {/* SEARCH AND FILTER CONTROLS */}
+        {/* Table Controls */}
         <div className="table-controls">
           <input
             type="text"

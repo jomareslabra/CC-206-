@@ -171,19 +171,7 @@ export const mockPatients = [
   }
 ];
 
-export const mockDoctors = [
-  {
-    id: 1,
-    doctorId: 'DOC001',
-    name: 'Dr. Sarah Wilson',
-    specialization: 'Cardiology',
-    email: 's.wilson@hospital.com',
-    phone: '(555) 123-4567',
-    status: 'active'
-  }
-];
-
-// ADD THESE - Your patient service functions
+// Patient service functions
 export const patientService = {
   getPatients: () => [...mockPatients],
   
@@ -234,5 +222,148 @@ export const patientService = {
   filterByStatus: (status) => {
     if (status === 'all') return mockPatients;
     return mockPatients.filter(patient => patient.status === status);
+  }
+};
+
+// ===== ENHANCED DOCTORS DATA (REPLACES THE OLD ONE) =====
+export const mockDoctors = [
+  {
+    id: 1,
+    doctorId: 'DOC001',
+    name: 'Dr. Sarah Wilson',
+    specialization: 'Cardiology',
+    email: 's.wilson@hospital.com',
+    phone: '(555) 111-1111',
+    status: 'active',
+    avatar: 'SW',
+    yearsOfExperience: 12,
+    qualifications: ['MD, Cardiology', 'Board Certified'],
+    office: 'Room 301, Floor 3',
+    schedule: 'Mon, Wed, Fri: 9AM-5PM',
+    hourlyRate: 180,
+    notes: 'Specializes in interventional cardiology. Speaks English and Spanish.'
+  },
+  {
+    id: 2,
+    doctorId: 'DOC002', 
+    name: 'Dr. Michael Brown',
+    specialization: 'Dermatology',
+    email: 'm.brown@hospital.com',
+    phone: '(555) 222-2222',
+    status: 'active',
+    avatar: 'MB',
+    yearsOfExperience: 8,
+    qualifications: ['MD, Dermatology', 'Cosmetic Surgery Certified'],
+    office: 'Room 205, Floor 2',
+    schedule: 'Tue, Thu: 10AM-6PM',
+    hourlyRate: 150,
+    notes: 'Expert in cosmetic dermatology and skin cancer screenings.'
+  },
+  {
+    id: 3,
+    doctorId: 'DOC003',
+    name: 'Dr. Lisa Garcia',
+    specialization: 'Orthopedics',
+    email: 'l.garcia@hospital.com',
+    phone: '(555) 333-3333',
+    status: 'active',
+    avatar: 'LG',
+    yearsOfExperience: 15,
+    qualifications: ['MD, Orthopedic Surgery', 'Sports Medicine Fellowship'],
+    office: 'Room 410, Floor 4',
+    schedule: 'Mon-Fri: 8AM-4PM',
+    hourlyRate: 200,
+    notes: 'Specializes in sports injuries and joint replacements.'
+  },
+  {
+    id: 4,
+    doctorId: 'DOC004',
+    name: 'Dr. James Wilson',
+    specialization: 'Pediatrics',
+    email: 'j.wilson@hospital.com',
+    phone: '(555) 444-4444',
+    status: 'on-leave',
+    avatar: 'JW',
+    yearsOfExperience: 10,
+    qualifications: ['MD, Pediatrics', 'Child Development Specialist'],
+    office: 'Room 105, Floor 1',
+    schedule: 'Mon, Wed, Fri: 9AM-3PM',
+    hourlyRate: 140,
+    notes: 'Currently on maternity leave until June 2024.'
+  },
+  {
+    id: 5,
+    doctorId: 'DOC005',
+    name: 'Dr. Amanda Chen',
+    specialization: 'Neurology',
+    email: 'a.chen@hospital.com',
+    phone: '(555) 555-5555',
+    status: 'active',
+    avatar: 'AC',
+    yearsOfExperience: 11,
+    qualifications: ['MD, Neurology', 'Epilepsy Specialist'],
+    office: 'Room 308, Floor 3',
+    schedule: 'Tue, Thu, Sat: 11AM-7PM',
+    hourlyRate: 190,
+    notes: 'Head of Neurology Department. Research focus on migraine treatments.'
+  }
+];
+
+// ===== DOCTOR SERVICE FUNCTIONS =====
+export const doctorService = {
+  getDoctors: () => [...mockDoctors],
+  
+  getDoctorById: (id) => {
+    const doctor = mockDoctors.find(d => d.id === id);
+    return doctor ? { ...doctor } : null;
+  },
+  
+  addDoctor: (doctorData) => {
+    const newDoctor = {
+      id: mockDoctors.length + 1,
+      doctorId: `DOC${String(mockDoctors.length + 1).padStart(3, '0')}`,
+      status: 'active',
+      avatar: doctorData.name.split(' ').map(n => n[0]).join(''),
+      ...doctorData
+    };
+    mockDoctors.push(newDoctor);
+    return { ...newDoctor };
+  },
+  
+  updateDoctor: (id, updates) => {
+    const index = mockDoctors.findIndex(d => d.id === id);
+    if (index !== -1) {
+      mockDoctors[index] = { ...mockDoctors[index], ...updates };
+      return { ...mockDoctors[index] };
+    }
+    return null;
+  },
+  
+  deleteDoctor: (id) => {
+    const index = mockDoctors.findIndex(d => d.id === id);
+    if (index !== -1) {
+      mockDoctors[index].status = 'inactive';
+      return true;
+    }
+    return false;
+  },
+  
+  searchDoctors: (term) => {
+    const lowerTerm = term.toLowerCase();
+    return mockDoctors.filter(doctor => 
+      doctor.name.toLowerCase().includes(lowerTerm) ||
+      doctor.specialization.toLowerCase().includes(lowerTerm) ||
+      doctor.doctorId.toLowerCase().includes(lowerTerm)
+    );
+  },
+  
+  filterBySpecialization: (specialization) => {
+    if (specialization === 'all') return mockDoctors;
+    return mockDoctors.filter(doctor => doctor.specialization === specialization);
+  },
+  
+  filterByStatus: (status) => {
+    if (status === 'all') return mockDoctors;
+    return mockDoctors.filter(doctor => doctor.status === status);
   }
 };

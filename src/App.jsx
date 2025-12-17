@@ -10,6 +10,7 @@ import PatientsPage from './pages/PatientsPage';
 import DoctorsPage from './pages/DoctorsPage';    
 import './styles/App.css';
 import PatientForm from './components/patients/PatientForm';
+import DoctorForm from './components/doctors/DoctorForm';  // ADD THIS LINE
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -35,8 +36,10 @@ function App() {
             <Route path="appointments" element={<AppointmentsPage />} />
             <Route path="patients" element={<PatientsPage />} />  
             <Route path="patients/new" element={<PatientForm mode="add" />} />
-             <Route path="patients/:id/edit" element={<PatientForm mode="edit" />} />
+            <Route path="patients/:id/edit" element={<PatientForm mode="edit" />} />
             <Route path="doctors" element={<DoctorsPage />} />
+            <Route path="doctors/new" element={<DoctorForm mode="add" />} />      {/* ADD THIS LINE */}
+            <Route path="doctors/:id/edit" element={<DoctorForm mode="edit" />} /> {/* ADD THIS LINE */}
             <Route index element={<Navigate to="dashboard" />} />
           </Route>
           
